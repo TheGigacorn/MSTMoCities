@@ -1,5 +1,7 @@
 from collections import defaultdict
 import math
+import time
+import matplotlib.pyplot as plt 
 
 
 class Graph: 
@@ -85,7 +87,7 @@ class Graph:
         print( "Following are the edges in the constructed MST")
         f = open("kruskals_output.txt",'w')
         for i in range(len(result)):
-            adjacencyList[result[i][0]].insert(0, [result[i][1], result[i][2]])
+            adjacencyList[result[i][0]].insert(0, [cityname[result[i][1]], result[i][2]])
         for i in range(len(cityname)):
             f.write(str('{}: {}\n'.format(cityname[i], adjacencyList[i])))
         f.close()
@@ -131,5 +133,13 @@ for i in range(0, len(latitude)):
             g.addEdge(i, j, d) # adds an edge given the starting node i, end node j, and distance/weight w
  
 #print(g.graph)  
-# Driver code 
+# Driver code
+totaltime = 0
+timestart = time.time()
 g.KruskalMST() 
+totaltime = totaltime + (time.time() - timestart)
+print(totaltime)
+
+plt.plot(len(cityname),totaltime)
+plt.draw()
+plt.show()
