@@ -2,8 +2,12 @@ import math
 import sys
 from collections import defaultdict
 import heapq
-class Graph():
-    def __init__(self, verticies):
+
+
+        ############        Adjacency Matrix        ###########
+#The following is a series of functions that was used to calculate the MST using an adjacency matrix
+class Graph_Matrix():
+    def __init__(self, verticies): #creates a graph with verticies being set to the number passed to it and graph is initialized to be all 0 in a 2D matrix
         self.V = verticies
         self.graph = [[0 for x in range(verticies)] for y in range(verticies)]
 
@@ -38,7 +42,20 @@ class Graph():
                     parent[v] = u
         self.printMST(parent)
 
-filearray = []
+
+
+        #############       Adjacency List      #############
+def create_spanning_tree(graph, starting_vertex):
+    mst = defaultdict(list)
+    visited = set([starting_vertex])
+    edges = [(cost, starting_vertex, to) for to, cost in graph[starting_vertex]]
+    print(edges)
+    heapq.heapify(edges)
+
+
+
+
+filearray = [] # array to hold 
 cityname = []
 population = []
 latitude = []
@@ -67,7 +84,7 @@ for i in range(0, len(latitude)):
         d= 7922 * math.asin(math.sqrt(a))
         if d <= 30:
             adjacencyMat[i][j] = d
-            newNode = [cityname[j], d]
+            newNode = [j, int(d)]
             adjacencyList[i].insert(0, newNode)
 
 for i in adjacencyList:
@@ -77,6 +94,7 @@ for i in adjacencyList:
 #print(latitude)
 #print(longitude) 
 
-g = Graph(len(cityname))
+g = Graph_Matrix(len(cityname))
 g.graph = adjacencyMat
 g.primMST()
+dict(create_spanning_tree(adjacencyList, cityname[i]))
